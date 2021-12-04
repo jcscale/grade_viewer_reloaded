@@ -1,0 +1,143 @@
+{% extends 'grade/base.html' %}
+
+{% block contents %}
+{% comment %} {% include 'student/navbar.html' %} {% endcomment %}
+
+    <div class="wrapper">
+        <!-- Sidebar  -->
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                {% if request.user.is_student %}
+                    <a class="navbar-brand" href="{% url 'student-grade' user.pk %}">Online Grading</a>
+                {% elif request.user.is_teacher%}
+                    <a class="navbar-brand" href="{% url 'teacher' %}">Online Grading</a>
+                {% else %}
+                    <a class="navbar-brand" href="{% url 'adminpage' %}">Online Grading</a>
+                {% endif %}
+            </div>
+
+            <ul class="list-unstyled components">
+                <p>{{user.first_name}} {{user.last_name}}</p>
+                <li>
+                    <a href="{% url 'teacher' %}">Home</a>
+                </li>
+                <li>
+                    <a href="{% url 'teacher-subjects' %}">My Subjects</a>
+                </li>
+                <li class="active">
+                    <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Account</a>
+                    <ul class="collapse list-unstyled" id="homeSubmenu">
+                        <li>
+                            <a href="{% url 'profile' %}">Edit Profile</a>
+                        </li>
+                        <li>
+                            <a href="{% url 'password-change' %}">Change Password</a>
+                        </li>
+                        {% comment %} <li>
+                            <a href="#">Home 3</a>
+                        </li> {% endcomment %}
+                    </ul>
+                </li>
+                 <li>
+                    <a href="{%url 'logout'%}">Logout</a>
+                </li>
+                {% comment %} <li>
+                    <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Pages</a>
+                    <ul class="collapse list-unstyled" id="pageSubmenu">
+                        <li>
+                            <a href="#">Page 1</a>
+                        </li>
+                        <li>
+                            <a href="#">Page 2</a>
+                        </li>
+                        <li>
+                            <a href="#">Page 3</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">Portfolio</a>
+                </li>
+                <li>
+                    <a href="#">Contact</a>
+                </li> {% endcomment %}
+            </ul>
+
+            <ul class="list-unstyled CTAs">
+                {% comment %} <li>
+                    <a href="https://bootstrapious.com/tutorial/files/sidebar.zip" class="download">Download source</a>
+                </li>
+                <li>
+                    <a href="https://bootstrapious.com/p/bootstrap-sidebar" class="article">Back to article</a>
+                </li> {% endcomment %}
+                <footer class="text-center">&copy; JC Escala 2021 </footer>
+            </ul>
+        </nav>
+
+        <!-- Page Content  -->
+        <div id="content">
+
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+
+                    <button type="button" id="sidebarCollapse" class="btn btn-info">
+                        <i class="fas fa-align-left"></i>
+                        <span>Toggle Sidebar</span>
+                    </button>
+                    {% comment %} <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="fas fa-align-justify"></i>
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="nav navbar-nav ml-auto">
+                            <li class="nav-item active">
+                                <a class="nav-link" href="#">Page</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Page</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Page</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Page</a>
+                            </li>
+                        </ul>
+                    </div> {% endcomment %}
+                </div>
+            </nav>
+
+             <div class="container">
+        <div class="col-md mt-3 border" style="margin:auto" id="teacher-subjects">
+            <h1 id="my-subjects">My Subjects</h1>
+             <table class="table table-striped table-sm table-hover table-bordered" width="100%">
+                <thead>
+                    <tr>
+                        <th scope="row">SUBJECT</th>
+                        <th scope="row">NUMBER OF STUDENTS</th>
+                        <th scope="row">SCHOOL YEAR</th>
+                        <th scope="row">ACTION</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    {% for subjects in teach_sub %}
+                        <tr>
+                            <td>{{subjects.subject_name__subject_name}}</td>
+                            <td>{{subjects.name__count}}</td>
+                            <td>{{subjects.year_taken}}</td>
+                            <td><a type="button" class="btn btn-warning btn-sm" href="{% url 'student-list' subjects.subject_name_id subjects.year_taken %}">View</a></td>
+                        </tr>
+                    {% endfor %}
+                    
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+        </div>
+    </div>
+
+   
+
+{% endblock contents %}
